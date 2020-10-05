@@ -2,32 +2,24 @@ package pl.fintech.challenge1.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import pl.fintech.challenge1.backend.controller.dto.RegistrationDTO;
+import pl.fintech.challenge1.backend.controller.mapper.UserMapper;
 import pl.fintech.challenge1.backend.domain.user.User;
-import pl.fintech.challenge1.backend.domain.user.UserRepository;
+import pl.fintech.challenge1.backend.domain.user.UserService;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/user")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    @GetMapping
-    public String example() {
-        return "Hello FinTech!";
-    }
+    private final UserService userService;
 
-    @PostMapping(path="/add")
+    @PostMapping(path="/register")
     public @ResponseBody
-    String addNewUser (@RequestParam String username, @RequestParam String password) {
+    User addNewUser (@RequestBody RegistrationDTO registrationDTO) {
         //todo: this should be hashed by bcrypt but for now it will do
-        User user = User.builder().username(username).password(password).build();
-        userRepository.save(user);
-        return "Saved";
-    }
-
-    @GetMapping(path="/all")
-    public @ResponseBody Iterable<User> getAllUsers() {
-        return userRepository.findAll();
+        return userService.saveUser(userMapper.mapDTOToUser(registrationDTO));
     }
 }

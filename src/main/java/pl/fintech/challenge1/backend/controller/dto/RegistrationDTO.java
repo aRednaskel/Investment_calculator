@@ -11,7 +11,7 @@ public class RegistrationDTO {
 
     @Email(message = "Wprowadź poprawny email")
     @NotBlank(message = "Wprowadź email")
-    private String username;
+    private String email;
 
     @Size(min = 6, message = "Hasło musi mieć conajmniej 6 znaków")
     private String password;

@@ -19,9 +19,9 @@ public class User {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
-    @NotBlank(message = "Username is required")
+    @NotBlank(message = "Email is required")
     @Column(unique = true, nullable = false)
-    private String username;
+    private String email;
 
     @NotBlank(message = "Password is required")
     @Column(nullable = false)
