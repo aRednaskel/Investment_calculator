@@ -1,4 +1,4 @@
-package pl.fintech.challenge1.backend.domain;
+package pl.fintech.challenge1.backend.domain.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

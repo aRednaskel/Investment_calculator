@@ -1,14 +1,14 @@
-package pl.fintech.challenge1.backend;
+package pl.fintech.challenge1.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.fintech.challenge1.backend.domain.User;
+import pl.fintech.challenge1.backend.domain.dao.User;
 import pl.fintech.challenge1.backend.persistence.UserRepository;
 
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/")
-public class ExampleController {
+public class UserController {
 
     private final UserRepository userRepository;
 
