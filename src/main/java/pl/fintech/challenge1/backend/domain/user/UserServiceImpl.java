@@ -1,13 +1,9 @@
-package pl.fintech.challenge1.backend.service.impl;
+package pl.fintech.challenge1.backend.domain.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.fintech.challenge1.backend.domain.dao.User;
-import pl.fintech.challenge1.backend.domain.dto.RegistrationDTO;
-import pl.fintech.challenge1.backend.exception.UsernameAlreadyExistsException;
-import pl.fintech.challenge1.backend.persistence.UserRepository;
-import pl.fintech.challenge1.backend.service.UserService;
+import pl.fintech.challenge1.backend.controller.dto.RegistrationDTO;
 
 @Service
 @RequiredArgsConstructor

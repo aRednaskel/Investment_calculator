@@ -1,4 +1,4 @@
-package pl.fintech.challenge1.backend.exception;
+package pl.fintech.challenge1.backend.domain.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

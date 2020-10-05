@@ -1,4 +1,4 @@
-package pl.fintech.challenge1.backend.domain.dto;
+package pl.fintech.challenge1.backend.controller.dto;
 
 import lombok.Data;
 

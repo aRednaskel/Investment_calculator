@@ -1,9 +1,8 @@
-package pl.fintech.challenge1.backend.service;
+package pl.fintech.challenge1.backend.domain.user;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.fintech.challenge1.backend.domain.dao.User;
-import pl.fintech.challenge1.backend.domain.dto.RegistrationDTO;
+import pl.fintech.challenge1.backend.controller.dto.RegistrationDTO;
 
 @Service
 public interface UserService {

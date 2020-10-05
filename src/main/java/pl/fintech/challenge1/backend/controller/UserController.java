@@ -2,8 +2,8 @@ package pl.fintech.challenge1.backend.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import pl.fintech.challenge1.backend.domain.dao.User;
-import pl.fintech.challenge1.backend.persistence.UserRepository;
+import pl.fintech.challenge1.backend.domain.user.User;
+import pl.fintech.challenge1.backend.domain.user.UserRepository;
 
 @RequiredArgsConstructor
 @RestController
