@@ -1,9 +1,7 @@
-package pl.fintech.challenge1.backend.persistence;
+package pl.fintech.challenge1.backend.domain.user;
 
 import org.springframework.data.repository.CrudRepository;
-import pl.fintech.challenge1.backend.domain.User;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
-
-
+    User save(User user);
 }
