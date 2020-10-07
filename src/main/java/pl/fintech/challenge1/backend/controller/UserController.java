@@ -20,7 +20,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public UserDTO createNewUser (@Valid @RequestBody RegistrationDTO registrationDTO) {
         return userMapper.mapUserToDTO(userService.save(userMapper.mapDTOToUser(registrationDTO)));
