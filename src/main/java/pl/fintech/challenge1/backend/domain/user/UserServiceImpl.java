@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
         try {
             return userRepository.save(user);
         } catch (Exception e) {
-            throw new UsernameAlreadyExistsException("Username '" + user.getEmail() + "' already exists");
+            throw new EmailAlreadyExistsException("Username '" + user.getEmail() + "' already exists");
         }
     }
 
