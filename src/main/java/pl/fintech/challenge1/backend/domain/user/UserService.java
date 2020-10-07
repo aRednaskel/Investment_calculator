@@ -1,9 +1,10 @@
 package pl.fintech.challenge1.backend.domain.user;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-//@Service
+import java.util.List;
+
 public interface UserService {
-    User saveUser(User user);
+    User save(User user);
+
+    List<User> findAll();
 }

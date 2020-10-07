@@ -8,7 +8,6 @@ import javax.validation.constraints.Size;
 
 @Data
 public class RegistrationDTO {
-
     @Email(message = "Wprowadź poprawny email")
     @NotBlank(message = "Wprowadź email")
     private String email;
