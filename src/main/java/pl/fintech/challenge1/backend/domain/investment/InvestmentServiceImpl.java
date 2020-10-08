@@ -18,10 +18,7 @@ class InvestmentServiceImpl implements InvestmentService {
 
     @Override
     public GraphData calculateInvestition(InvestitionParams investitionParams) {
-        //nie musze tu wpisywac double w diamencie bo java sama się domyśli skoro tam są double
         GraphData graphData = new GraphData(new LinkedList<>(), new LinkedList<>(), new LinkedList<>());
-        // powinienem korzystać z klasy double bo jeśli korzystam ze zmiennej typu double i autoboxingu to jest to
-        // dodatkowa operacja
         Long payments = investitionParams.getFirstDeposit();
         Double profit = 0D;
         Double investmentValue = payments.doubleValue();
