@@ -32,7 +32,7 @@ public class InvestmentServiceTest {
     }
 
     @Test
-    public void shouldReturnCorrectValuesWithoutAdditionalContributions(){
+    public void shouldReturnCorrectValuesWithoutAdditionalDeposits(){
         InvestitionParams investitionParams = new InvestitionParams(1000L, 0L,
                 2L, 10L, DepositFrequency.MONTH);
         GraphData graphData = investmentService.calculateInvestition(investitionParams);
@@ -41,8 +41,23 @@ public class InvestmentServiceTest {
         assertEquals(3, graphData.getProfit().size());
         assertEquals(3, graphData.getInvestmentValue().size());
 
-        assertEquals(Arrays.asList(1000L, 2000L, 3000L), graphData.getPayments());
+        assertEquals(Arrays.asList(1000L, 1000L, 1000L), graphData.getPayments());
         assertEquals(Arrays.asList(0d, 100d, 210d), graphData.getProfit().size());
-        assertEquals(Arrays.asList(1000d, 2100d, 3210d), graphData.getInvestmentValue().size());
+        assertEquals(Arrays.asList(1000d, 1100d, 1210d), graphData.getInvestmentValue().size());
+    }
+
+    @Test
+    public void shouldReturnCorrectValuesWithAdditionalDeposits(){
+        InvestitionParams investitionParams = new InvestitionParams(1000L, 100L,
+                2L, 10L, DepositFrequency.YEAR);
+        GraphData graphData = investmentService.calculateInvestition(investitionParams);
+        //length after 2 years of each list should be 3
+        assertEquals(3, graphData.getPayments().size());
+        assertEquals(3, graphData.getProfit().size());
+        assertEquals(3, graphData.getInvestmentValue().size());
+
+        assertEquals(Arrays.asList(1000L, 1100L, 1200L), graphData.getPayments());
+        assertEquals(Arrays.asList(0d, 110d, 241d), graphData.getProfit().size());
+        assertEquals(Arrays.asList(1000d, 1210, 1441L), graphData.getInvestmentValue().size());
     }
 }
