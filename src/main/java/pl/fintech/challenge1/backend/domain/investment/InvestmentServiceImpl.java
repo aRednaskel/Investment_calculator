@@ -19,20 +19,25 @@ class InvestmentServiceImpl implements InvestmentService {
     @Override
     public GraphData calculateInvestition(InvestitionParams investitionParams) {
         GraphData graphData = new GraphData(new LinkedList<>(), new LinkedList<>(), new LinkedList<>());
-        Long payments = investitionParams.getFirstDeposit();
+        Long payment = investitionParams.getFirstDeposit();
         Double profit = 0D;
-        Double investmentValue = payments.doubleValue();
-        graphData.getPayments().add(payments);
+        Double investmentValue = payment.doubleValue();
+        graphData.getPayments().add(payment);
         graphData.getProfit().add(profit);
         graphData.getInvestmentValue().add(investmentValue);
         for(int i = 1; i <= investitionParams.getDurationInYears(); i++){
-            payments += investitionParams.getFirstDeposit();
-            //todo: niepoprwane ale na razie skupiamysie na programowaniu, potem popraw ten wzor
-            profit *= (1+100.0/investitionParams.getReturnOnInvestment())*profit;
+            payment = graphData.getPayments().get(graphData.getPayments().size() - 1)
+                    + investitionParams.getSystematicPayments();
 
-            graphData.getPayments().add(payments);
+            Double current_profit = investitionParams.getReturnOnInvestment() / 100.0
+                    * (graphData.getInvestmentValue().get(graphData.getInvestmentValue().size() - 1)
+                    + investitionParams.getSystematicPayments());
+
+            profit += current_profit;
+
+            graphData.getPayments().add(payment);
             graphData.getProfit().add(profit);
-            graphData.getInvestmentValue().add(payments + profit);
+            graphData.getInvestmentValue().add(payment + profit);
         }
         return graphData;
     }
