@@ -3,6 +3,8 @@ package pl.fintech.challenge1.backend.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import pl.fintech.challenge1.backend.domain.investment.GraphData;
+import pl.fintech.challenge1.backend.domain.investment.InvestitionParams;
 import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
 import pl.fintech.challenge1.backend.domain.investment.InvestmentType;
 
@@ -20,6 +22,11 @@ public class InvestmentController {
     public InvestmentType createInvestment(@RequestBody InvestmentType investmentType) {
 
         return investmentService.save(investmentType);
+    }
+
+    @PostMapping("/investition")
+    public GraphData getInvestition(@RequestBody InvestitionParams investitionParams){
+        return investmentService.calculateInvestition(investitionParams);
     }
 
 }
