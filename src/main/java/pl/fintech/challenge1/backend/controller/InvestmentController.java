@@ -3,10 +3,13 @@ package pl.fintech.challenge1.backend.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import pl.fintech.challenge1.backend.domain.investment.GraphData;
-import pl.fintech.challenge1.backend.domain.investment.InvestitionParams;
+import pl.fintech.challenge1.backend.controller.dto.InvestitionParams;
 import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
-import pl.fintech.challenge1.backend.domain.investment.InvestmentType;
+import pl.fintech.challenge1.backend.domain.investment.Investment;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -19,14 +22,20 @@ public class InvestmentController {
     @ResponseStatus(HttpStatus.CREATED)
     //todo: tyle, że tutaj pewnie powinno może być dto aby nie musieć całego usera podawać, chyba że można to jedną
     // adnotacją zrobić
-    public InvestmentType createInvestment(@RequestBody InvestmentType investmentType) {
+    public Investment createInvestment(@RequestBody Investment investment) {
 
-        return investmentService.save(investmentType);
+        return investmentService.save(investment);
     }
 
-    @PostMapping("/investition")
-    public GraphData getInvestition(@RequestBody InvestitionParams investitionParams){
-        return investmentService.calculateInvestition(investitionParams);
+    @GetMapping
+    public List<Investment> getInvestition(@RequestBody InvestitionParams investitionParams){
+        return investmentService.getInvestments(investitionParams);
     }
+
+    @GetMapping("/profits")
+    public List<Map<Integer, BigDecimal>> getProfits(List<Investment> investments) {
+        return investmentService.getProfits(investments);
+    }
+
 
 }
