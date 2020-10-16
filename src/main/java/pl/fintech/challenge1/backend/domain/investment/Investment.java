@@ -14,24 +14,21 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class InvestmentType {
+public class Investment {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Integer id;
 
-    private String name;
-    private String description;
-    private String riskOfDescription;
+    private String companyName;
+    private String logoUrl;
 
-    private Long firstDeposit;
-    private Long systematicPayment;
+    private Long initialCapital;
+    private Long duration;
+    private Long additionalContribution;
     private DepositFrequency depositFrequency;
-    private Long durationInYears;
     private BigDecimal returnRate;
 
     @ManyToOne
     private User user;
-
-    private boolean isPublic;
 }

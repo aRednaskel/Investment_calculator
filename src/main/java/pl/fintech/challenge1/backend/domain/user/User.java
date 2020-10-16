@@ -1,7 +1,7 @@
 package pl.fintech.challenge1.backend.domain.user;
 
 import lombok.*;
-import pl.fintech.challenge1.backend.domain.investment.InvestmentType;
+import pl.fintech.challenge1.backend.domain.investment.Investment;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -26,5 +26,5 @@ public class User {
     private String password;
 
     @OneToMany
-    private Set<InvestmentType> investmentTypes;
+    private Set<Investment> investments;
 }
