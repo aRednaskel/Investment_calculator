@@ -17,7 +17,7 @@ public class InvestitionParams {
 
     @Min(value = 1000, message = "Value should not be less than 1 000")
     @Max(value = 1000000, message = "Value should not be bigger than 1 000 0000")
-    private Long initialCapital;
+    private BigDecimal initialCapital;
 
     @Min(value = 3, message = "Value should not be less than 3")
     @Max(value = 120, message = "Value should not be bigger than 1 000 0000")
@@ -25,7 +25,7 @@ public class InvestitionParams {
 
     @Min(value = 0, message = "Value should not be less than 0")
     @Max(value = 10000, message = "Value should not be bigger than 1 000 0000")
-    private Long additionalContribution;
+    private BigDecimal additionalContribution;
 
     private DepositFrequency depositFrequency;
 

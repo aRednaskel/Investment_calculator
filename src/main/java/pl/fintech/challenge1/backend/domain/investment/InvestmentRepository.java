@@ -5,9 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 interface InvestmentRepository extends CrudRepository<Investment, Integer> {
 
-    List<Investment> findByInitialCapitalGreaterThanEqualAndReturnRateLessThanEqual(Long initialCapital, BigDecimal returnRate);
+    List<Investment> findByInitialCapitalGreaterThanEqual(BigDecimal initialCapital);
+    Optional<Investment> findByCompanyNameAndType(String companyName, Type type);
 }
