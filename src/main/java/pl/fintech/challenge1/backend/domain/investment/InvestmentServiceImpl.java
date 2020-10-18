@@ -6,7 +6,6 @@ import pl.fintech.challenge1.backend.controller.dto.InvestitionParams;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Service

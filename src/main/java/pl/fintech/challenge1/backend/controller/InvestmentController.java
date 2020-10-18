@@ -5,13 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.fintech.challenge1.backend.controller.dto.InvestitionParams;
 import pl.fintech.challenge1.backend.domain.investment.GraphData;
-import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
 import pl.fintech.challenge1.backend.domain.investment.Investment;
+import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
 
-import java.math.BigDecimal;
-import java.util.LinkedList;
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,20 +20,18 @@ public class InvestmentController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    //todo: tyle, że tutaj pewnie powinno może być dto aby nie musieć całego usera podawać, chyba że można to jedną
-    // adnotacją zrobić
-    public Investment createInvestment(@RequestBody Investment investment) {
+    public Investment createInvestment(@Valid @RequestBody Investment investment) {
 
         return investmentService.save(investment);
     }
 
     @PostMapping
-    public List<Investment> getInvestition(@RequestBody InvestitionParams investitionParams){
+    public List<Investment> getInvestition(@Valid @RequestBody InvestitionParams investitionParams){
         return investmentService.getInvestments(investitionParams);
     }
 
     @PostMapping("/profits")
-    public List<GraphData> getProfits(@RequestBody List<Investment> investments) {
+    public List<GraphData> getProfits(@Valid @RequestBody List<Investment> investments) {
         return investmentService.getProfits(investments);
     }
 
