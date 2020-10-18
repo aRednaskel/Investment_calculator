@@ -15,18 +15,17 @@ pipeline {
                 }
             }
         }
-        stage('Sonar') {
-            when { branch 'master' }
-            agent { docker 'fintech/sonar-agent' }
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    script {
+//         stage('Sonar') {
+//             when { branch 'master' }
+//             agent { docker 'fintech/sonar-agent' }
+//             steps {
+//                 withSonarQubeEnv('SonarQube') {
+//                     script {
 //                         sh "sonar-scanner -Dsonar.projectKey=carpo-team::backend -Dsonar.java.binaries=./target/classes -X"
-                        sh "sonar-scanner -Dsonar.projectKey=carpo-team::backend -Dsonar.java.binaries=target/classes -X"
-                    }
-                }
-            }
-        }
+//                     }
+//                 }
+//             }
+//         }
         stage('Docker push') {
             when { branch 'master' }
             agent none
