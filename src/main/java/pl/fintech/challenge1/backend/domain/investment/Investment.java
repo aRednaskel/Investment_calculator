@@ -1,5 +1,6 @@
 package pl.fintech.challenge1.backend.domain.investment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,10 +19,12 @@ public class Investment {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
+    @JsonIgnore
     private Integer id;
 
     private String companyName;
     private String logoUrl;
+    private Type type;
 
     private Long initialCapital;
     private Long duration;
@@ -30,5 +33,6 @@ public class Investment {
     private BigDecimal returnRate;
 
     @ManyToOne
+    @JsonIgnore
     private User user;
 }

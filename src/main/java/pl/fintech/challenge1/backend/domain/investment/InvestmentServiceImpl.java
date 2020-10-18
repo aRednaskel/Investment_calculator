@@ -5,10 +5,9 @@ import org.springframework.stereotype.Service;
 import pl.fintech.challenge1.backend.controller.dto.InvestitionParams;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -29,17 +28,39 @@ class InvestmentServiceImpl implements InvestmentService {
     }
 
     @Override
-    public List<Map<Integer, BigDecimal>> getProfits(List<Investment> investments) {
-        List<Map<Integer, BigDecimal>> profitList = new LinkedList<>();
-        Map<Integer, BigDecimal> profitMap = new HashMap<>();
+    public List<GraphData> getProfits(List<Investment> investments) {
+        List<GraphData> profitList = new ArrayList<>();
+        BigDecimal currentValue;
+        long initialCapital;
+        GraphData graphData;
+        double returnRate;
+        BigDecimal additionalContribution;
+
         for (Investment investment: investments) {
-            for (int i = 1; i <= investment.getDuration() ; i++) {
-                profitMap.put(i, BigDecimal.valueOf(
-                   Math.pow(investment.getReturnRate().doubleValue(), i) * investment.getInitialCapital()
-                ));
+            returnRate = investment.getReturnRate().doubleValue() / 100 + 1;
+            graphData = new GraphData(investment.getDuration().intValue());
+            initialCapital = investment.getInitialCapital();
+            currentValue = BigDecimal.valueOf(initialCapital);
+            additionalContribution = BigDecimal.valueOf(investment.getAdditionalContribution());
+
+            if (investment.getAdditionalContribution() == 0) {
+                for (int i = 1; i <= investment.getDuration() ; i++) {
+                    currentValue = currentValue.multiply(
+                            BigDecimal.valueOf(returnRate));
+                    graphData.addNextMonthData(i,
+                            currentValue.subtract(BigDecimal.valueOf(initialCapital)));
+                }
+            } else {
+                for (int i = 1; i <= investment.getDuration() ; i++) {
+                    currentValue = currentValue.multiply(
+                            BigDecimal.valueOf(returnRate));
+                    graphData.addNextMonthData(i,
+                            currentValue.subtract(BigDecimal.valueOf(initialCapital)));
+                    if ( i % investment.getDepositFrequency().getNumberOfMonths() == 0)
+                        currentValue = currentValue.add(additionalContribution);
+                }
             }
-            profitList.add(profitMap);
-            profitMap.clear();
+            profitList.add(graphData);
         }
         return profitList;
     }

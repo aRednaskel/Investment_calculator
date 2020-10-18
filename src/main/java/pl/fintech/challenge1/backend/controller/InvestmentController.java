@@ -4,10 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.fintech.challenge1.backend.controller.dto.InvestitionParams;
+import pl.fintech.challenge1.backend.domain.investment.GraphData;
 import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
 import pl.fintech.challenge1.backend.domain.investment.Investment;
 
 import java.math.BigDecimal;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +20,7 @@ public class InvestmentController {
 
     private final InvestmentService investmentService;
 
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     //todo: tyle, że tutaj pewnie powinno może być dto aby nie musieć całego usera podawać, chyba że można to jedną
     // adnotacją zrobić
@@ -27,13 +29,13 @@ public class InvestmentController {
         return investmentService.save(investment);
     }
 
-    @GetMapping
+    @PostMapping
     public List<Investment> getInvestition(@RequestBody InvestitionParams investitionParams){
         return investmentService.getInvestments(investitionParams);
     }
 
-    @GetMapping("/profits")
-    public List<Map<Integer, BigDecimal>> getProfits(List<Investment> investments) {
+    @PostMapping("/profits")
+    public List<GraphData> getProfits(@RequestBody List<Investment> investments) {
         return investmentService.getProfits(investments);
     }
 

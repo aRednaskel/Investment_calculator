@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Data
 public class InvestitionParams {
     private Long initialCapital;
-    private Long Duration;
+    private Long duration;
     private Long durationInYears;
     private BigDecimal returnRate;
     private DepositFrequency depositFrequency;
