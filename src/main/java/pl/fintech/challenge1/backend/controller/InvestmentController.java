@@ -4,14 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import pl.fintech.challenge1.backend.controller.dto.InvestitionParams;
+import pl.fintech.challenge1.backend.domain.investment.DepositFrequency;
 import pl.fintech.challenge1.backend.domain.investment.GraphData;
-import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
 import pl.fintech.challenge1.backend.domain.investment.Investment;
+import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
 
+import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,20 +22,21 @@ public class InvestmentController {
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    //todo: tyle, że tutaj pewnie powinno może być dto aby nie musieć całego usera podawać, chyba że można to jedną
-    // adnotacją zrobić
-    public Investment createInvestment(@RequestBody Investment investment) {
+    public Investment createInvestment(@Valid @RequestBody Investment investment) {
 
         return investmentService.save(investment);
     }
 
-    @PostMapping
-    public List<Investment> getInvestition(@RequestBody InvestitionParams investitionParams){
+    @GetMapping
+    public List<Investment> getInvestition(@RequestParam BigDecimal initialCapital, @RequestParam Long duration,
+                                           @RequestParam BigDecimal additionalContribution, @RequestParam DepositFrequency depositFrequency,
+                                           @RequestParam BigDecimal returnRate){
+        InvestitionParams investitionParams = new InvestitionParams(initialCapital, duration, additionalContribution, depositFrequency, returnRate);
         return investmentService.getInvestments(investitionParams);
     }
 
-    @PostMapping("/profits")
-    public List<GraphData> getProfits(@RequestBody List<Investment> investments) {
+    @GetMapping("/profits")
+    public List<GraphData> getProfits(@Valid @RequestBody List<Investment> investments) {
         return investmentService.getProfits(investments);
     }
 

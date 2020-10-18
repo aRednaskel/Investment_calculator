@@ -16,7 +16,7 @@ public class GraphData {
     private List<BigDecimal> profit;
 
     public GraphData(int duration) {
-        this.months = new ArrayList(duration);
+        this.months = new ArrayList<>(duration);
         this.profit = new ArrayList<>(duration);
     }
 

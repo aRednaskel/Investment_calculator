@@ -1,7 +1,9 @@
 package pl.fintech.challenge1.backend.domain.user;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepository extends CrudRepository<User, Integer> {
+@Repository
+interface UserRepository extends CrudRepository<User, Integer> {
     User save(User user);
 }
