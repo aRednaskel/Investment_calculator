@@ -53,7 +53,7 @@ class InvestmentServiceImpl implements InvestmentService {
             graphData = new GraphData(investment.getDuration().intValue());
             initialCapital = investment.getInitialCapital();
             currentValue = initialCapital;
-            additionalContribution = investment.getAdditionalContribution();
+            additionalContribution = BigDecimal.ZERO;
 
             if (investment.getAdditionalContribution().intValue() == 0) {
                 for (int i = 1; i <= investment.getDuration() ; i++) {
@@ -67,9 +67,12 @@ class InvestmentServiceImpl implements InvestmentService {
                     currentValue = currentValue.multiply(
                             BigDecimal.valueOf(returnRate));
                     graphData.addNextMonthData(i,
-                            currentValue.subtract(initialCapital));
-                    if ( i % investment.getDepositFrequency().getNumberOfMonths() == 0)
-                        currentValue = currentValue.add(additionalContribution);
+                            currentValue.subtract(initialCapital)
+                            .subtract(additionalContribution));
+                    if ( i % investment.getDepositFrequency().getNumberOfMonths() == 0) {
+                        currentValue = currentValue.add(investment.getAdditionalContribution());
+                        additionalContribution = additionalContribution.add(investment.getAdditionalContribution());
+                    }
                 }
             }
             profitList.add(graphData);

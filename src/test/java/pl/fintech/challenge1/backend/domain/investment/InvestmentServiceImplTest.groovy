@@ -19,12 +19,23 @@ class InvestmentServiceImplTest extends Specification {
         investments.size() == 5
     }
 
+    def "GetProfits"() {
+        when:
+        List<GraphData> profitList = investmentService.getProfits(createListOfInvestments(10))
+        then:
+        profitList.size() == 9
+    }
+
 
 
     List<Investment> createListOfInvestments(int number) {
         List<Investment> investments = new ArrayList<>();
         for (i in 1..<number) {
-            investments.add(Investment.builder().id(i).companyName("").logoUrl("").type(Type.BONDS)
+            investments.add(Investment.builder()
+                    .id(i)
+                    .companyName("")
+                    .logoUrl("")
+                    .type(Type.BONDS)
                     .initialCapital(BigDecimal.valueOf(1000l * i))
                     .duration(3 + i)
                     .additionalContribution(BigDecimal.valueOf(50 * (i % 2)))
