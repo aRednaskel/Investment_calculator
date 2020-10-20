@@ -15,6 +15,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin
 @RequestMapping("/api/investments")
 public class InvestmentController {
 
@@ -27,7 +28,6 @@ public class InvestmentController {
         return investmentService.save(investment);
     }
 
-    @CrossOrigin
     @GetMapping
     public List<Investment> getInvestition(@RequestParam BigDecimal initialCapital, @RequestParam Long duration,
                                            @RequestParam BigDecimal additionalContribution, @RequestParam DepositFrequency depositFrequency,
