@@ -16,16 +16,35 @@ class InvestmentServiceImplTest extends Specification {
         when:
         investments = investmentService.getInvestments(getInvestitionParams())
         then:
-        investments.size() == 5
+        assert investments.size() == 5
+        investments.each {
+            assert it.getInitialCapital().compareTo(1000) >= 0
+            assert it.getReturnRate().compareTo(1) >= 0
+        }
+
     }
 
     def "GetProfits"() {
         when:
         List<GraphData> profitList = investmentService.getProfits(createListOfInvestments(10))
         then:
-        profitList.size() == 9
+        assert profitList.size() == 9
+        profitList.each {
+            def profitSize = it.getProfits().size()
+            assert profitSize == it.getMonths().get(profitSize -  1)
+            assert Math.pow( (1 + 0.2 * profitSize / 100 / 12), profitSize) <= it.getProfits().size() - 1
+        }
     }
 
+    def "GetSummary"() {
+        when:
+        GraphData profits = investmentService.getSummary(createListOfInvestments(10))
+        def profitSize = profits.getProfits().size()
+        then:
+        assert profits.getMonths().size() == profitSize
+        assert Math.pow( (1 + 0.2 * profitSize / 100 / 12), profitSize) <= profits.getProfits().size() - 1
+
+    }
 
 
     List<Investment> createListOfInvestments(int number) {

@@ -40,5 +40,10 @@ public class InvestmentController {
         return investmentService.getProfits(investments);
     }
 
+    @GetMapping("/summary")
+    public GraphData getSummaryOfAllInvestments(@Valid @RequestBody List<Investment> investments) {
+        return investmentService.getSummary(investments);
+    }
+
 
 }

@@ -10,4 +10,6 @@ public interface InvestmentService {
     List<Investment> getInvestments(InvestitionParams investitionParams);
 
     List<GraphData> getProfits(List<Investment> investments);
+
+    GraphData getSummary(List<Investment> investments);
 }
