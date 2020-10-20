@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum DepositFrequency {
+    NULL(0),
     MONTH(1),
     QUARTER(3),
     HALF_YEAR(6),

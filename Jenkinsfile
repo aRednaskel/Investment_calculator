@@ -21,7 +21,7 @@ pipeline {
 //             steps {
 //                 withSonarQubeEnv('SonarQube') {
 //                     script {
-//                         sh "sonar-scanner -Dsonar.projectKey=carpo-team::backend -Dsonar.java.binaries=./target/classes -X"
+//                         sh "sonar-scanner -Dsonar.projectKey=carpo-team::backend -Dsonar.java.binaries=./target/classes"
 //                     }
 //                 }
 //             }
