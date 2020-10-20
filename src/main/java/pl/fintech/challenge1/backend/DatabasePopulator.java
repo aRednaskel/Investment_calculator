@@ -45,7 +45,7 @@ public class DatabasePopulator implements CommandLineRunner {
                 .initialCapital(new BigDecimal(1000000))
                 .duration(100L)
                 .depositFrequency(DepositFrequency.HALF_YEAR)
-                .additionalContribution(new BigDecimal(20000))
+                .additionalContribution(new BigDecimal(200))
                 .returnRate(new BigDecimal(1))
                 .build()
         );
