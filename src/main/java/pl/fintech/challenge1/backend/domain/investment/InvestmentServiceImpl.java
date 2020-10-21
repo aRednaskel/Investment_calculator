@@ -65,17 +65,17 @@ class InvestmentServiceImpl implements InvestmentService {
                 }
             } else {
                 for (int i = 1; i <= investment.getDuration() ; i++) {
-                    currentValue = currentValue.multiply(
-                            BigDecimal.valueOf(returnRate));
-                    graphData.addNextMonthData(i,
-                            currentValue.subtract(initialCapital)
-                            .subtract(additionalContribution));
                     if ( i % investment.getDepositFrequency().getNumberOfMonths() == 0) {
                         currentValue = currentValue
                                 .add(investment.getAdditionalContribution());
                         additionalContribution = additionalContribution
                                 .add(investment.getAdditionalContribution());
                     }
+                    currentValue = currentValue.multiply(
+                            BigDecimal.valueOf(returnRate));
+                    graphData.addNextMonthData(i,
+                            currentValue.subtract(initialCapital)
+                            .subtract(additionalContribution));
                 }
             }
             profitList.add(graphData);
@@ -96,49 +96,50 @@ class InvestmentServiceImpl implements InvestmentService {
             initialCapital = investment.getInitialCapital();
             currentValue = initialCapital;
             additionalContribution = BigDecimal.ZERO;
+            BigDecimal valueFromPreviousMonth;
 
             if (investment.getAdditionalContribution().intValue() == 0
                     || investment.getDepositFrequency().getNumberOfMonths() == 0) {
                 for (int i = 1; i <= investment.getDuration() ; i++) {
+                    valueFromPreviousMonth = currentValue;
                     currentValue = currentValue.multiply(
                             BigDecimal.valueOf(returnRate));
                     if (profits.size() >= i) {
                         profits.set(i - 1,
                                 profits.get(i - 1)
                                 .add(currentValue
-                                        .subtract(initialCapital)));
+                                        .subtract(valueFromPreviousMonth)));
                     } else {
                         profits.add(currentValue
-                                .subtract(initialCapital));
+                                .subtract(valueFromPreviousMonth));
                     }
                 }
             } else {
                 for (int i = 1; i <= investment.getDuration() ; i++) {
-                    currentValue = currentValue.multiply(
-                            BigDecimal.valueOf(returnRate));
-                    BigDecimal currentProfit = currentValue
-                            .subtract(initialCapital)
-                            .subtract(additionalContribution);
-                    if (profits.size() >= i) {
-                        profits.set(i - 1,
-                                profits.get(i - 1)
-                                        .add(currentProfit));
-                    } else {
-                        profits.add(currentProfit);
-                    }
                     if ( i % investment.getDepositFrequency().getNumberOfMonths() == 0) {
                         currentValue = currentValue
                                 .add(investment.getAdditionalContribution());
                         additionalContribution = additionalContribution
                                 .add(investment.getAdditionalContribution());
                     }
+                    valueFromPreviousMonth = currentValue;
+                    currentValue = currentValue.multiply(
+                            BigDecimal.valueOf(returnRate));
+                    if (profits.size() >= i) {
+                        profits.set(i - 1,
+                                profits.get(i - 1)
+                                        .add(currentValue
+                                                .subtract(valueFromPreviousMonth)));
+                    } else {
+                        profits.add(currentValue
+                                .subtract(valueFromPreviousMonth));
+                    }
                 }
             }
         }
         for (int i = 1; i < profits.size(); i++) {
-            profits.set(i,
-                    profits.get(i)
-                            .add(profits.get(i-1)));
+            profits.set(i, profits.get(i)
+                    .add(profits.get(i-1)));
         }
         return new GraphData(profits);
     }
