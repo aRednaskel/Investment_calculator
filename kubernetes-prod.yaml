@@ -24,7 +24,7 @@ spec:
         - name: fintech-docker-secret
       containers:
         - name: backend
-          image: carpo-team-docker-registry.fintechchallenge.pl/carpo-team/backend:latest
+          image: carpo-team-docker-registry.fintechchallenge.pl/carpo-team/backend:image_version_placeholder
           imagePullPolicy: Always
           ports:
             - name: api
