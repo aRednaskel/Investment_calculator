@@ -28,6 +28,8 @@ public class Investment {
     @Size(min = 1,max = 24)
     private String companyName;
     private String logoUrl;
+
+    @Enumerated(value = EnumType.STRING)
     private Type type;
 
     @Min(value = 1000, message = "Value should not be less than 1 000")
@@ -42,6 +44,7 @@ public class Investment {
     @Max(value = 10000, message = "Value should not be bigger than 1 000 0000")
     private BigDecimal additionalContribution;
 
+    @Enumerated(value = EnumType.STRING)
     private DepositFrequency depositFrequency;
 
     @Min(value = 0, message = "Value should not be less than 0")

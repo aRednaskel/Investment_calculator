@@ -35,12 +35,12 @@ public class InvestmentController {
         return investmentService.getInvestments(investitionParams);
     }
 
-    @GetMapping("/profits")
+    @GetMapping("/investitionProfits")
     public List<GraphData> getProfits(@Valid @RequestBody List<Investment> investments) {
         return investmentService.getProfits(investments);
     }
 
-    @GetMapping("/summary")
+    @GetMapping("/return")
     public GraphData getSummaryOfAllInvestments(@Valid @RequestBody List<Investment> investments) {
         return investmentService.getSummary(investments);
     }

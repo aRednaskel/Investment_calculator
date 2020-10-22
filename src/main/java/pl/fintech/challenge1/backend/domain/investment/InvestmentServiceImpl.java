@@ -31,10 +31,12 @@ class InvestmentServiceImpl implements InvestmentService {
     @Override
     public List<Investment> getInvestments(InvestitionParams investitionParams) {
         List<Investment> investments = investmentRepository.
-                findByInitialCapitalGreaterThanEqual(investitionParams.getInitialCapital());
-        investments = investments.stream().filter( investment ->
-                    investment.getInitialCapital().compareTo(investitionParams.getInitialCapital()) > 0
-                    && investment.getReturnRate().compareTo(investitionParams.getReturnRate()) >= 0)
+                findByInitialCapitalGreaterThanEqualAndAdditionalContributionGreaterThanEqualAndDurationGreaterThanEqualAndReturnRateGreaterThanEqual(
+                        investitionParams.getInitialCapital(), investitionParams.getAdditionalContribution(),
+                         investitionParams.getDuration(), investitionParams.getReturnRate());
+        investments = investments.stream()
+                .filter( investment ->
+                    investment.getDepositFrequency().getNumberOfMonths() == investitionParams.getDepositFrequency().getNumberOfMonths())
                 .collect(Collectors.toList());
         return investments;
     }
