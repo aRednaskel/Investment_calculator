@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.fintech.challenge1.backend.controller.dto.InvestitionParams;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ class InvestmentServiceImpl implements InvestmentService {
     private final InvestmentRepository investmentRepository;
     private final Logger log = LoggerFactory.getLogger(InvestmentServiceImpl.class);
 
+    @Transactional
     @Override
     public Investment save(Investment investment) {
         if (investmentRepository.findByCompanyNameAndType(investment.getCompanyName(), investment.getType()).isEmpty()) {
