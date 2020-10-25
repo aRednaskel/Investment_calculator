@@ -24,7 +24,6 @@ public class InvestmentController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Investment createInvestment(@Valid @RequestBody Investment investment) {
-
         return investmentService.save(investment);
     }
 
@@ -36,13 +35,8 @@ public class InvestmentController {
         return investmentService.getInvestments(investitionParams);
     }
 
-    @GetMapping("/investitionProfits")
-    public List<GraphData> getProfits(@Valid @RequestBody List<Investment> investments) {
-        return investmentService.getProfits(investments);
-    }
-
-    @GetMapping("/return")
-    public GraphData getSummaryOfAllInvestments(@Valid @RequestBody List<Investment> investments) {
+    @PostMapping("/return")
+    public GraphData summaryOfAllInvestments(@Valid @RequestBody List<Investment> investments) {
         return investmentService.getSummary(investments);
     }
 

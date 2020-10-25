@@ -2,6 +2,7 @@ package pl.fintech.challenge1.backend.domain.investment;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class GraphData {
     private List<Integer> months;
     private List<BigDecimal> profits;

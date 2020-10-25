@@ -33,58 +33,15 @@ class InvestmentServiceImpl implements InvestmentService {
     @Override
     public List<Investment> getInvestments(InvestitionParams investitionParams) {
         List<Investment> investments = investmentRepository.
-                findByInitialCapitalGreaterThanEqualAndAdditionalContributionGreaterThanEqualAndDurationGreaterThanEqualAndReturnRateGreaterThanEqual(
-                        investitionParams.getInitialCapital(), investitionParams.getAdditionalContribution(),
-                         investitionParams.getDuration(), investitionParams.getReturnRate());
+                findByInitialCapitalLessThanEqual(investitionParams.getInitialCapital());
         investments = investments.stream()
                 .filter( investment ->
-                    investment.getDepositFrequency().getNumberOfMonths() == investitionParams.getDepositFrequency().getNumberOfMonths())
+                    investment.getDuration() <= investitionParams.getDuration() &&
+                    investment.getAdditionalContribution().compareTo(investitionParams.getAdditionalContribution()) <= 0 &&
+                    investment.getDepositFrequency().getNumberOfMonths() == investitionParams.getDepositFrequency().getNumberOfMonths() &&
+                    investment.getReturnRate().compareTo(investitionParams.getReturnRate()) <= 0)
                 .collect(Collectors.toList());
         return investments;
-    }
-
-    @Override
-    public List<GraphData> getProfits(List<Investment> investments) {
-        List<GraphData> profitList = new ArrayList<>();
-        BigDecimal currentValue;
-        BigDecimal initialCapital;
-        GraphData graphData;
-        double returnRate;
-        BigDecimal additionalContribution;
-
-        for (Investment investment: investments) {
-            returnRate = investment.getReturnRate().doubleValue() / 100 / 12 + 1;
-            graphData = new GraphData(investment.getDuration().intValue());
-            initialCapital = investment.getInitialCapital();
-            currentValue = initialCapital;
-            additionalContribution = BigDecimal.ZERO;
-
-            if (investment.getAdditionalContribution().intValue() == 0
-                    || investment.getDepositFrequency().getNumberOfMonths() == 0) {
-                for (int i = 1; i <= investment.getDuration() ; i++) {
-                    currentValue = currentValue.multiply(
-                            BigDecimal.valueOf(returnRate));
-                    graphData.addNextMonthData(i,
-                            currentValue.subtract(initialCapital));
-                }
-            } else {
-                for (int i = 1; i <= investment.getDuration() ; i++) {
-                    if ( i % investment.getDepositFrequency().getNumberOfMonths() == 0) {
-                        currentValue = currentValue
-                                .add(investment.getAdditionalContribution());
-                        additionalContribution = additionalContribution
-                                .add(investment.getAdditionalContribution());
-                    }
-                    currentValue = currentValue.multiply(
-                            BigDecimal.valueOf(returnRate));
-                    graphData.addNextMonthData(i,
-                            currentValue.subtract(initialCapital)
-                            .subtract(additionalContribution));
-                }
-            }
-            profitList.add(graphData);
-        }
-        return profitList;
     }
 
     @Override

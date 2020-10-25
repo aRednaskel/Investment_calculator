@@ -1,20 +1,13 @@
 package pl.fintech.challenge1.backend.config;
 
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.event.EventListener;
-import pl.fintech.challenge1.backend.domain.investment.DepositFrequency;
-import pl.fintech.challenge1.backend.domain.investment.Investment;
-import pl.fintech.challenge1.backend.domain.investment.Type;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.math.BigDecimal;
 
 @EnableSwagger2
 @Configuration
