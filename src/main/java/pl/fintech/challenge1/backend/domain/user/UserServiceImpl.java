@@ -16,10 +16,11 @@ class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(User user) {
-        try {
+        if(userRepository.findByEmail(user.getEmail()).isEmpty()) {
+            log.info("Created user with email {}", user.getEmail());
             return userRepository.save(user);
-        } catch (Exception e) {
-            throw new EmailAlreadyExistsException("Username '" + user.getEmail() + "' already exists");
         }
+        log.error("User with email {} already exists", user.getEmail());
+        throw new EmailAlreadyExistsException("Username '" + user.getEmail() + "' already exists");
     }
 }
