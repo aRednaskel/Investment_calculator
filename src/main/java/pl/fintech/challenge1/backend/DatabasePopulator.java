@@ -8,6 +8,7 @@ import pl.fintech.challenge1.backend.domain.investment.Investment;
 import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
 
 import java.math.BigDecimal;
+import java.util.Random;
 
 @Component
 @RequiredArgsConstructor
@@ -15,39 +16,40 @@ public class DatabasePopulator implements CommandLineRunner {
 
     private final InvestmentService investmentService;
 
+    private final Random random = new Random();
+
+    private int getRandomNumber(int min, int max) {
+        return random.nextInt(max - min) + min;
+    }
+
+    //https://www.baeldung.com/java-random-string
+    private String getRandomString(){
+        int leftLimit = 97; // letter 'a'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        StringBuilder buffer = new StringBuilder(targetStringLength);
+        for (int i = 0; i < targetStringLength; i++) {
+            int randomLimitedInt = leftLimit + (int)
+                    (random.nextFloat() * (rightLimit - leftLimit + 1));
+            buffer.append((char) randomLimitedInt);
+        }
+        String generatedString = buffer.toString();
+        return generatedString;
+    }
+
     @Override
     public void run(String... args) throws Exception {
-        investmentService.save(Investment.builder().id(1)
-                .companyName("google")
-                .logoUrl("google.com")
-                .initialCapital(new BigDecimal(1000))
-                .duration(3L)
-                .depositFrequency(DepositFrequency.MONTH)
-                .additionalContribution(new BigDecimal(200))
-                .returnRate(new BigDecimal(2))
-                .build()
-        );
-
-        investmentService.save(Investment.builder().id(2)
-                .companyName("apple")
-                .logoUrl("apple.com")
-                .initialCapital(new BigDecimal(100000))
-                .duration(9L)
-                .depositFrequency(DepositFrequency.YEAR)
-                .additionalContribution(new BigDecimal(500))
-                .returnRate(new BigDecimal(3))
-                .build()
-        );
-
-        investmentService.save(Investment.builder().id(3)
-                .companyName("microsoft")
-                .logoUrl("microsoft.com")
-                .initialCapital(new BigDecimal(1000000))
-                .duration(100L)
-                .depositFrequency(DepositFrequency.HALF_YEAR)
-                .additionalContribution(new BigDecimal(200))
-                .returnRate(new BigDecimal(1))
-                .build()
-        );
+        for(int n=1; n<=200;n++){
+            investmentService.save(Investment.builder().id(n)
+                    .companyName(getRandomString())
+                    .logoUrl("randomsite.com")
+                    .initialCapital(new BigDecimal(getRandomNumber(1000, 1000000)))
+                    .duration((long) getRandomNumber(3, 120))
+                    .depositFrequency(DepositFrequency.getRandom())
+                    .additionalContribution(new BigDecimal(getRandomNumber(0, 10000)))
+                    .returnRate(new BigDecimal(getRandomNumber(0, 10)))
+                    .build()
+            );
+        }
     }
 }
