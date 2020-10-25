@@ -28,5 +28,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and().logout()
                 .permitAll();
+        //to allow h2 console page
+        http.headers().frameOptions().disable();
+        http.authorizeRequests().antMatchers("/").permitAll().and()
+                .authorizeRequests().antMatchers("/console/**").permitAll();
     }
 }
