@@ -69,7 +69,7 @@ class InvestmentControllerTest extends Specification {
 
     }
 
-    def "GetInvestition"() {
+    def "GetInvestitions"() {
         given:
         def investments = createListOfInvestments(10)
         def investitionParams = getInvestitionParams()

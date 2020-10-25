@@ -16,7 +16,7 @@ class InvestmentServiceImplTest extends Specification {
         when:
         investments = investmentService.getInvestments(getInvestitionParams())
         then:
-        assert investments.size() == 2
+        assert investments.size() == 6
         investments.each {
             assert it.getInitialCapital() <= getInvestitionParams().getInitialCapital()
             assert it.getDuration() <= getInvestitionParams().getDuration()
@@ -48,7 +48,7 @@ class InvestmentServiceImplTest extends Specification {
                     .companyName("Company")
                     .logoUrl("Logo")
                     .type(Type.BONDS)
-                    .initialCapital(BigDecimal.valueOf(1000l * i))
+                    .initialCapital(BigDecimal.valueOf(1000l * 2))
                     .duration(3 + i)
                     .additionalContribution(BigDecimal.valueOf(50 * (i % 2)))
                     .depositFrequency(DepositFrequency.QUARTER)
@@ -58,7 +58,7 @@ class InvestmentServiceImplTest extends Specification {
     }
 
     InvestitionParams getInvestitionParams() {
-        return new InvestitionParams(BigDecimal.valueOf(9000), 5,
-                BigDecimal.valueOf(50), DepositFrequency.QUARTER, BigDecimal.ONE)
+        return new InvestitionParams(BigDecimal.valueOf(9000), 9,
+                BigDecimal.valueOf(50), DepositFrequency.QUARTER, BigDecimal.TEN)
     }
 }

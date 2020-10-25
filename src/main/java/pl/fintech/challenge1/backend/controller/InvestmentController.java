@@ -28,9 +28,9 @@ public class InvestmentController {
     }
 
     @GetMapping
-    public List<Investment> getInvestition(@RequestParam BigDecimal initialCapital, @RequestParam Long duration,
-                                           @RequestParam BigDecimal additionalContribution, @RequestParam DepositFrequency depositFrequency,
-                                           @RequestParam BigDecimal returnRate){
+    public List<Investment> getInvestitions(@RequestParam BigDecimal initialCapital, @RequestParam Long duration,
+                                            @RequestParam BigDecimal additionalContribution, @RequestParam DepositFrequency depositFrequency,
+                                            @RequestParam BigDecimal returnRate){
         InvestitionParams investitionParams = new InvestitionParams(initialCapital, duration, additionalContribution, depositFrequency, returnRate);
         return investmentService.getInvestments(investitionParams);
     }

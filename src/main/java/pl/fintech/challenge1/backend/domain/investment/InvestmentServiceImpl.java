@@ -3,12 +3,14 @@ package pl.fintech.challenge1.backend.domain.investment;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import pl.fintech.challenge1.backend.controller.dto.InvestitionParams;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +42,9 @@ class InvestmentServiceImpl implements InvestmentService {
                     investment.getAdditionalContribution().compareTo(investitionParams.getAdditionalContribution()) <= 0 &&
                     investment.getDepositFrequency().getNumberOfMonths() == investitionParams.getDepositFrequency().getNumberOfMonths() &&
                     investment.getReturnRate().compareTo(investitionParams.getReturnRate()) <= 0)
+                .sorted(Comparator
+                        .comparing(Investment::getInitialCapital)
+                        .thenComparing(Investment::getReturnRate))
                 .collect(Collectors.toList());
         return investments;
     }
