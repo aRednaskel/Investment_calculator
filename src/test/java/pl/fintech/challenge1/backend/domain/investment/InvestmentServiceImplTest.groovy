@@ -12,38 +12,31 @@ class InvestmentServiceImplTest extends Specification {
         given:
             List<Investment> investments = createListOfInvestments(10)
         investmentRepository.
-                findByInitialCapitalGreaterThanEqual(BigDecimal.valueOf(1000)) >> investments
+                findByInitialCapitalLessThanEqual(BigDecimal.valueOf(9000)) >> investments
         when:
         investments = investmentService.getInvestments(getInvestitionParams())
         then:
-        assert investments.size() == 5
+        assert investments.size() == 6
         investments.each {
-            assert it.getInitialCapital().compareTo(1000) >= 0
-            assert it.getReturnRate().compareTo(1) >= 0
+            assert it.getInitialCapital() <= getInvestitionParams().getInitialCapital()
+            assert it.getDuration() <= getInvestitionParams().getDuration()
+            assert it.getAdditionalContribution() <= getInvestitionParams().getAdditionalContribution()
+            assert it.getDepositFrequency() == getInvestitionParams().getDepositFrequency()
+            assert it.getReturnRate() <= getInvestitionParams().getReturnRate()
         }
 
     }
 
-    def "GetProfits"() {
-        when:
-        List<GraphData> profitList = investmentService.getProfits(createListOfInvestments(10))
-        then:
-        assert profitList.size() == 9
-        profitList.each {
-            def profitSize = it.getProfits().size()
-            assert profitSize == it.getMonths().get(profitSize -  1)
-            assert Math.pow( (1 + 0.2 * profitSize / 100 / 12), profitSize) <= it.getProfits().size() - 1
-        }
-    }
-
-    def "GetSummary"() {
+    def "Summary"() {
         when:
         GraphData profits = investmentService.getSummary(createListOfInvestments(10))
+        def profit = [47, 95, 142, 190, 238, 285, 331, 374, 414, 447, 471, 485]
         def profitSize = profits.getProfits().size()
         then:
         assert profits.getMonths().size() == profitSize
-        assert Math.pow( (1 + 0.2 * profitSize / 100 / 12), profitSize) <= profits.getProfits().size() - 1
-
+        for (i in 0..< profitSize) {
+            assert Math.floor(profits.getProfits().get(i)) == profit[i]
+        }
     }
 
 
@@ -52,10 +45,10 @@ class InvestmentServiceImplTest extends Specification {
         for (i in 1..<number) {
             investments.add(Investment.builder()
                     .id(i)
-                    .companyName("")
-                    .logoUrl("")
+                    .companyName("Company")
+                    .logoUrl("Logo")
                     .type(Type.BONDS)
-                    .initialCapital(BigDecimal.valueOf(1000l * i))
+                    .initialCapital(BigDecimal.valueOf(1000l * 2))
                     .duration(3 + i)
                     .additionalContribution(BigDecimal.valueOf(50 * (i % 2)))
                     .depositFrequency(DepositFrequency.QUARTER)
@@ -65,7 +58,7 @@ class InvestmentServiceImplTest extends Specification {
     }
 
     InvestitionParams getInvestitionParams() {
-        return new InvestitionParams(BigDecimal.valueOf(1000), 5,
-                BigDecimal.valueOf(50), DepositFrequency.QUARTER, BigDecimal.ONE)
+        return new InvestitionParams(BigDecimal.valueOf(9000), 9,
+                BigDecimal.valueOf(50), DepositFrequency.QUARTER, BigDecimal.TEN)
     }
 }

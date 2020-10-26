@@ -24,25 +24,19 @@ public class InvestmentController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public Investment createInvestment(@Valid @RequestBody Investment investment) {
-
         return investmentService.save(investment);
     }
 
     @GetMapping
-    public List<Investment> getInvestition(@RequestParam BigDecimal initialCapital, @RequestParam Long duration,
-                                           @RequestParam BigDecimal additionalContribution, @RequestParam DepositFrequency depositFrequency,
-                                           @RequestParam BigDecimal returnRate){
+    public List<Investment> getInvestitions(@RequestParam BigDecimal initialCapital, @RequestParam Long duration,
+                                            @RequestParam BigDecimal additionalContribution, @RequestParam DepositFrequency depositFrequency,
+                                            @RequestParam BigDecimal returnRate){
         InvestitionParams investitionParams = new InvestitionParams(initialCapital, duration, additionalContribution, depositFrequency, returnRate);
         return investmentService.getInvestments(investitionParams);
     }
 
-    @GetMapping("/investitionProfits")
-    public List<GraphData> getProfits(@Valid @RequestBody List<Investment> investments) {
-        return investmentService.getProfits(investments);
-    }
-
-    @GetMapping("/return")
-    public GraphData getSummaryOfAllInvestments(@Valid @RequestBody List<Investment> investments) {
+    @PostMapping("/return")
+    public GraphData summaryOfAllInvestments(@Valid @RequestBody List<Investment> investments) {
         return investmentService.getSummary(investments);
     }
 
