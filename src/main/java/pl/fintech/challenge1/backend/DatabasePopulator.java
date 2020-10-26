@@ -41,8 +41,8 @@ public class DatabasePopulator implements CommandLineRunner {
     public void run(String... args) throws Exception {
         for(int n=1; n<=200;n++){
             investmentService.save(Investment.builder().id(n)
-                    .companyName(getRandomString())
-                    .logoUrl("randomsite.com")
+                    .companyName("CARE BEAR TFI")
+                    .logoUrl("/img/miniaturka.png")
                     .initialCapital(new BigDecimal(getRandomNumber(1000, 1000000)))
                     .duration((long) getRandomNumber(3, 120))
                     .depositFrequency(DepositFrequency.getRandom())
