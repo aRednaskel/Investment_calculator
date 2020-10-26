@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import pl.fintech.challenge1.backend.domain.investment.DepositFrequency;
 import pl.fintech.challenge1.backend.domain.investment.Investment;
 import pl.fintech.challenge1.backend.domain.investment.InvestmentService;
+import pl.fintech.challenge1.backend.domain.investment.Type;
 
 import java.math.BigDecimal;
 import java.util.Random;
@@ -48,6 +49,7 @@ public class DatabasePopulator implements CommandLineRunner {
                     .depositFrequency(DepositFrequency.getRandom())
                     .additionalContribution(new BigDecimal(getRandomNumber(0, 10000)))
                     .returnRate(new BigDecimal(getRandomNumber(0, 10)))
+                    .type(Type.getRandom())
                     .build()
             );
         }
