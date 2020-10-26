@@ -22,12 +22,15 @@ class InvestmentServiceImpl implements InvestmentService {
     @Transactional
     @Override
     public Investment save(Investment investment) {
-        if (investmentRepository.findByCompanyNameAndType(investment.getCompanyName(), investment.getType()).isEmpty()) {
-            log.info("New investment was created with ");
-            return investmentRepository.save(investment);
-        }
-        log.error("Investment with company name {} and type {} already exists", investment.getCompanyName(), investment.getType());
-        throw new InvestmentAlreadyExistException("Investment already exists");
+        //todo: for now frontend needs better name and we dont have time to write good-looking unique name bank generator or come up with 300 examples by hands
+//        if (investmentRepository.findByCompanyNameAndType(investment.getCompanyName(), investment.getType()).isEmpty()) {
+//            log.info("New investment was created with ");
+//            return investmentRepository.save(investment);
+//        }
+//        log.error("Investment with company name {} and type {} already exists", investment.getCompanyName(), investment.getType());
+//        throw new InvestmentAlreadyExistException("Investment already exists");
+        log.info("New investment was created with ");
+        return investmentRepository.save(investment);
     }
 
     @Override
