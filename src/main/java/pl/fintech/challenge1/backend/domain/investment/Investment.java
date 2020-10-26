@@ -22,7 +22,6 @@ public class Investment {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @JsonIgnore
     private Integer id;
 
     @Size(min = 1,max = 24)
