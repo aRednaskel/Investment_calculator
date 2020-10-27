@@ -1,15 +1,10 @@
 package pl.fintech.challenge1.backend.controller
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.TestConfiguration
-import org.springframework.boot.test.json.JacksonTester
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Bean
 import org.springframework.test.context.ActiveProfiles
@@ -19,15 +14,13 @@ import pl.fintech.challenge1.backend.domain.investment.DepositFrequency
 import pl.fintech.challenge1.backend.domain.investment.GraphData
 import pl.fintech.challenge1.backend.domain.investment.Investment
 import pl.fintech.challenge1.backend.domain.investment.InvestmentService
-import pl.fintech.challenge1.backend.domain.investment.Type
+import pl.fintech.challenge1.backend.domain.investment.InvestmentType
 import org.springframework.http.MediaType
 import spock.lang.Specification
 import spock.mock.DetachedMockFactory
 
-import static org.hamcrest.Matchers.hasSize
 import static org.mockito.Mockito.when
 import static org.hamcrest.Matchers.is
-import static org.mockito.BDDMockito.given
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -117,7 +110,7 @@ class InvestmentControllerTest extends Specification {
         return Investment.builder()
                 .companyName("Company")
                 .logoUrl("Logo")
-                .type(Type.BONDS)
+                .investmentType(InvestmentType.BONDS)
                 .initialCapital(BigDecimal.valueOf(1000l))
                 .duration(3)
                 .additionalContribution(BigDecimal.valueOf(50l))
@@ -131,7 +124,7 @@ class InvestmentControllerTest extends Specification {
             investments.add(Investment.builder()
                     .companyName("Company")
                     .logoUrl("Logo")
-                    .type(Type.BONDS)
+                    .investmentType(InvestmentType.BONDS)
                     .initialCapital(BigDecimal.valueOf(1000l * i))
                     .duration(3 + i)
                     .additionalContribution(BigDecimal.valueOf(50 * (i % 2)))

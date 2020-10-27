@@ -9,7 +9,6 @@ import java.util.Optional;
 
 @Repository
 interface InvestmentRepository extends CrudRepository<Investment, Integer> {
-
     List<Investment> findByInitialCapitalLessThanEqual(BigDecimal initialCapital);
-    Optional<Investment> findByCompanyNameAndType(String companyName, Type type);
+    Optional<Investment> findByCompanyNameAndInvestmentType(String companyName, InvestmentType investmentType);
 }

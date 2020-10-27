@@ -27,7 +27,7 @@ public class Investment {
     private String logoUrl;
 
     @Enumerated(value = EnumType.STRING)
-    private Type type;
+    private InvestmentType investmentType;
 
     @Min(value = 1000, message = "Value should not be less than 1 000")
     @Max(value = 1000000, message = "Value should not be bigger than 1 000 0000")
