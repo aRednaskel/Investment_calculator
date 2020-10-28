@@ -47,7 +47,7 @@ class InvestmentServiceImplTest extends Specification {
                     .id(i)
                     .companyName("Company")
                     .logoUrl("Logo")
-                    .type(Type.BONDS)
+                    .investmentType(InvestmentType.BONDS)
                     .initialCapital(BigDecimal.valueOf(1000l * 2))
                     .duration(3 + i)
                     .additionalContribution(BigDecimal.valueOf(50 * (i % 2)))

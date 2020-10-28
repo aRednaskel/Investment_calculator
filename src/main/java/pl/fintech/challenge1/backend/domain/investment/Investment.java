@@ -8,9 +8,7 @@ import lombok.NoArgsConstructor;
 import pl.fintech.challenge1.backend.domain.user.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 
 @Entity
@@ -29,7 +27,7 @@ public class Investment {
     private String logoUrl;
 
     @Enumerated(value = EnumType.STRING)
-    private Type type;
+    private InvestmentType investmentType;
 
     @Min(value = 1000, message = "Value should not be less than 1 000")
     @Max(value = 1000000, message = "Value should not be bigger than 1 000 0000")
@@ -46,8 +44,8 @@ public class Investment {
     @Enumerated(value = EnumType.STRING)
     private DepositFrequency depositFrequency;
 
-    @Min(value = 0, message = "Value should not be less than 0")
-    @Max(value = 10, message = "Value should not be bigger than 10")
+    @DecimalMin(value = "0.5", message = "Value should not be less than 0.5")
+    @DecimalMax(value = "10.0", message = "Value should not be bigger than 10")
     private BigDecimal returnRate;
 
     @ManyToOne
