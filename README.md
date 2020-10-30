@@ -1,3 +1,11 @@
+# How to run
+
+Run this in main directory of repositorium
+```
+mvn spring-boot:run
+```
+# Rest of content
+
 This is regular application created via spring.io. Have a look at:
 * `Jenkinsfile` you'll find here how to build, push and deploy you application.
 * `kubernetes.yaml` check IngressRoute to find out how publish your application with DNS name over HTTPS
